@@ -8,6 +8,26 @@ class ProductProvider extends ChangeNotifier {
 
   bool isLoading = false;
   List<Product> products = [];
+  List<Product> filteredProducts = [];
+
+  // filter products
+  void filterProducts(String query) {
+    if (products.isNotEmpty) {
+      filteredProducts = products
+          .where(
+            (product) =>
+                product.title!.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
+    }
+    notifyListeners();
+  }
+
+  // clear filtered products
+  void clearFilteredProducts() {
+    filteredProducts.clear();
+    notifyListeners();
+  }
 
   // get products
   Future<void> getProducts() async {
